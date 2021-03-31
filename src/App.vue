@@ -2,9 +2,6 @@
   <div>
     <div>
       <b-container fluid class="unocmsHeader">
-        <div>
-          <slot></slot>
-        </div>
         <b-row>
           <b-col cols="1" class="mr-5">
             <img :src="require('@/assets/images/university-o.png')" height="100"/>
@@ -17,9 +14,9 @@
               <p class="h4">Course Management System</p>
             </b-row>
           </b-col>
-          <b-col v-if="localStorage != undefined && localStorage.getItem('isAuthenticates')" cols="1" class="mt-3 ml-5">
-            <b-dropdown right :text="localStorage.getItem('log_user')" class="float-right">
-              <b-dropdown-item>Log out</b-dropdown-item>
+          <b-col v-if="authenticated" cols="1" class="mt-3 ml-5">
+            <b-dropdown right class="float-right" :text="validUserName" >
+              <b-dropdown-item @click="logout">Log out</b-dropdown-item>
             </b-dropdown>
           </b-col>
           <b-col v-else cols="1" class="mt-3 ml-5">
@@ -36,50 +33,44 @@
       </b-nav>
     </div>
     <div>
-      <router-view/><!--:key="$route.fullPath"-->
+      <router-view/>
     </div>
   </div>
 
-<!--  <v-app>-->
-<!--    <v-app-bar-->
-<!--      color="#000000"-->
-<!--      dark-->
-<!--      prominent-->
-<!--      height="200"-->
-<!--    >-->
-<!--        <v-row>-->
-<!--          <v-col cols="2">-->
-<!--            <img :src="require('@/assets/images/university-o.png')" height="100" class="mt-5"/>-->
-<!--          </v-col>-->
-<!--          <v-col cols="9">-->
-<!--            <v-row>-->
-<!--              <v-toolbar-title color="White">UNIVERSITY OF NEBRASKA OMAHA</v-toolbar-title>-->
-<!--            </v-row>-->
-<!--            <v-row>-->
-<!--              <template>-->
-<!--                <v-toolbar-title align-with-title>Course Enrollment System</v-toolbar-title>-->
-<!--              </template>-->
-<!--          </v-row>-->
-<!--          </v-col>-->
-<!--        </v-row>-->
-<!--        <v-btn @click="login" class="mt-16">Login</v-btn>-->
-<!--      <template v-slot:extension>-->
-<!--        <v-tabs style="float:right">-->
-<!--          <v-tab>About</v-tab>-->
-<!--          <v-tab>Academics</v-tab>-->
-<!--          <v-tab>Contact us</v-tab>-->
-<!--        </v-tabs>-->
-<!--      </template>-->
-<!--    </v-app-bar>-->
-<!--    <v-content>-->
-<!--      <router-view/>-->
-<!--    </v-content>-->
-<!--  </v-app>-->
 </template>
 <script>
 import router from './router';
+import {APIService} from "./http/APIServices";
+const apiService = new APIService();
 export default {
-
+  data: () => ({
+    authenticated: false,
+    validUserName : ''
+  }),
+  mounted() {
+    this.getUser();
+  },
+  methods:{
+    logout() {
+      localStorage.removeItem('isAuthenticates');
+      localStorage.removeItem('log_user');
+      localStorage.removeItem('token');
+      this.authenticated = false;
+      this.validUserName = '';
+      window.location = "/"
+    },
+  // logout() {
+  //   this.loading = true;
+  //   apiService.logout().then((res) => {console.log(res);  window.location = "/"})
+  // },
+  getUser() {
+    if (localStorage.getItem("isAuthenticates")
+      && JSON.parse(localStorage.getItem("isAuthenticates")) === true) {
+      this.authenticated = true;
+      this.validUserName = JSON.parse(localStorage.getItem("log_user"));
+    }
+  }
+}
   }
 
 </script>

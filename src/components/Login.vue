@@ -12,6 +12,7 @@
             <b-row>
               <b-col>
                 <form>
+                  <p v-if="showMsg != ''" style="color: red">{{showMsg}}</p>
                   <b-form-group
                     id="group0"
                     label-cols-sm="4"
@@ -20,6 +21,7 @@
                     :label="'Username'"
                     label-for="username"
                   >
+
                     <b-form-input
                       id="email"
                       v-model="$data.username"
@@ -104,6 +106,7 @@ export default {
     login() {
         this.loading = true;
         apiService.authenticateLogin(this.credentials).then((res)=>{
+          console.log(res)
           localStorage.setItem('token', res.data.token);
           localStorage.setItem('isAuthenticates', JSON.stringify(true));
           localStorage.setItem('log_user', JSON.stringify(this.credentials.username));
@@ -111,16 +114,17 @@ export default {
           //router.go(-1);
           window.location = "/"
         }).catch(e => {
+          console.log(e)
+
           this.loading = false;
           localStorage.removeItem('isAuthenticates');
           localStorage.removeItem('log_user');
           localStorage.removeItem('token');
           // router.go(-1);
-          this.showMsg = 'error';
+          this.showMsg = 'Invalid Credentials. Please enter a valid username & password';
         })
     },
     validateUsername() {
-      console.log(this.$data.username)
       if (this.$data.username != null && this.$data.username.length > 3 && this.$data.username.match(/^[a-z0-9_]+$/)) {
         this.$data.usernameInvalidText = '';
         this.$data.credentials.username = this.$data.username

@@ -6,7 +6,22 @@
 
 <script>
 export default {
-name: "Home"
+name: "Home",
+  data: () => ({
+    authenticated: false,
+    validUserName : ''
+  }),
+  mounted() {
+    this.getUser();
+  },
+  methods: {
+    getUser() {
+      if (localStorage.getItem("isAuthenticates")
+        && JSON.parse(localStorage.getItem("isAuthenticates")) === true) {
+        this.validUserName = JSON.parse(localStorage.getItem("log_user"));
+      }
+    }
+  }
 }
 </script>
 

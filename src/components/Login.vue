@@ -134,7 +134,7 @@ export default {
       return false;
     },
     validatePassword() {
-      if(this.$data.password != null && this.$data.password.length > 7) {
+      if(this.$data.password != null && this.$data.password.length > 1) {
           this.$data.passwordInvalidText = '';
           this.$data.credentials.password = this.$data.password
           return true;

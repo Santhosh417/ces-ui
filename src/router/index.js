@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
+import Student from '@/components/Student'
 import AboutUs from '@/components/AboutUs'
 import ContactUs from '@/components/ContactUs'
 import Alumni from '@/components/Alumni'
@@ -17,11 +18,15 @@ export default new Router({
       name: 'Home',
       component: Home
     },
-
     {
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/student/:student',
+      name: 'student',
+      component: Student
     },
     {
       path: '/about-us',

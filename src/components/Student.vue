@@ -1,102 +1,82 @@
 <template>
-  <div>
-    <b-table-simple hover small caption-top responsive>
-      <caption>Student Profile:</caption>
-      <colgroup>
-        <col>
-        <col>
-      </colgroup>
-      <colgroup>
-        <col>
-        <col>
-        <col>
-      </colgroup>
-      <colgroup>
-        <col>
-        <col>
-      </colgroup>
-      <b-thead head-variant="dark">
-        <b-tr>
-          <b-th colspan="2">Region</b-th>
-          <b-th colspan="3">Clothes</b-th>
-          <b-th colspan="2">Accessories</b-th>
-        </b-tr>
-        <b-tr>
-          <b-th>Country</b-th>
-          <b-th>City</b-th>
-          <b-th>Trousers</b-th>
-          <b-th>Skirts</b-th>
-          <b-th>Dresses</b-th>
-          <b-th>Bracelets</b-th>
-          <b-th>Rings</b-th>
-        </b-tr>
-      </b-thead>
-      <b-tbody>
-        <b-tr>
-          <b-th rowspan="3">Belgium</b-th>
-          <b-th class="text-right">Antwerp</b-th>
-          <b-td>56</b-td>
-          <b-td>22</b-td>
-          <b-td>43</b-td>
-          <b-td variant="success">72</b-td>
-          <b-td>23</b-td>
-        </b-tr>
-        <b-tr>
-          <b-th class="text-right">Gent</b-th>
-          <b-td>46</b-td>
-          <b-td variant="warning">18</b-td>
-          <b-td>50</b-td>
-          <b-td>61</b-td>
-          <b-td variant="danger">15</b-td>
-        </b-tr>
-        <b-tr>
-          <b-th class="text-right">Brussels</b-th>
-          <b-td>51</b-td>
-          <b-td>27</b-td>
-          <b-td>38</b-td>
-          <b-td>69</b-td>
-          <b-td>28</b-td>
-        </b-tr>
-        <b-tr>
-          <b-th rowspan="2">The Netherlands</b-th>
-          <b-th class="text-right">Amsterdam</b-th>
-          <b-td variant="success">89</b-td>
-          <b-td>34</b-td>
-          <b-td>69</b-td>
-          <b-td>85</b-td>
-          <b-td>38</b-td>
-        </b-tr>
-        <b-tr>
-          <b-th class="text-right">Utrecht</b-th>
-          <b-td>80</b-td>
-          <b-td variant="danger">12</b-td>
-          <b-td>43</b-td>
-          <b-td>36</b-td>
-          <b-td variant="warning">19</b-td>
-        </b-tr>
-      </b-tbody>
-      <b-tfoot>
-        <b-tr>
-          <b-td colspan="7" variant="secondary" class="text-right">
-            Total Rows: <b>5</b>
-          </b-td>
-        </b-tr>
-      </b-tfoot>
-    </b-table-simple>
-  </div>
+  <b-container>
+    <b-row>
+      <b-col cols="10" offset="0">
+        <b-row>
+          <b-col>
+            <p class="h3 text-center">Student Profile</p>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <p v-if="showMsg != ''" style="color: red">{{ showMsg }}</p>
+          </b-col>
+        </b-row>
+        <b-row class="mt-4 bg-light rounded p-5">
+          <b-col>
+            <b-row>
+              <b-col>
+                <strong>Student Name:</strong>
+                {{ $data.studentInfo.name }}
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col><strong>Student Email: </strong> {{ $data.studentInfo.email }}</b-col>
+            </b-row>
+            <b-row>
+              <b-col><strong>Student Cell Phone:  </strong>{{ $data.studentInfo.cell_phone }}</b-col>
+            </b-row>
+            <b-row>
+              <b-col><strong>Start Date: </strong> {{ $data.studentInfo.start_date }}</b-col>
+            </b-row>
+            <b-row>
+              <b-col><strong>Expected Graduation Date: </strong>{{ $data.studentInfo.graduation_date }}</b-col>
+            </b-row>
+          </b-col>
+        </b-row>
+      </b-col>
+    </b-row>
+    <div>
+      <b-table-simple hover small caption-top responsive>
+        <caption><p class="h3">Enrollments:</p></caption>
+        <b-thead head-variant="dark">
+          <b-tr>
+            <b-th>ID</b-th>
+            <b-th>Course ID</b-th>
+            <b-th>Semester Name</b-th>
+            <b-th>Start Date</b-th>
+            <b-th>End Date</b-th>
+            <b-th>Status</b-th>
+            <b-th>Grade</b-th>
+          </b-tr>
+        </b-thead>
+        <b-tbody>
+          <b-tr v-for="enrollment in $data.studentInfo.enrollments">
+            <b-td>{{ enrollment.id }}</b-td>
+            <b-td>{{ enrollment.course_id }}</b-td>
+            <b-td>{{ enrollment.semester_name }}</b-td>
+            <b-td>{{ enrollment.start_date }}</b-td>
+            <b-td>{{ enrollment.end_date }}</b-td>
+            <b-td>{{ enrollment.status }}</b-td>
+            <b-td>{{ enrollment.grade }}</b-td>
+          </b-tr>
+        </b-tbody>
+        <b-tfoot>
+          <b-tr>
+            <b-td colspan="7" variant="secondary" class="text-right">
+            </b-td>
+          </b-tr>
+        </b-tfoot>
+      </b-table-simple>
+    </div>
+  </b-container>
 
 </template>
 <script>
 import {APIService} from '../http/APIServices';
-
 const apiService = new APIService();
 export default {
   name: 'Login',
-  props: {
-    // studentID: {
-    //   required: true
-    // }
-  },
   data: () => ({
     credentials: {},
     studentInfo: {},
@@ -104,37 +84,21 @@ export default {
     showMsg: '',
     loading: false
   }),
-  mounted(){
+  mounted() {
     this.getStudentInfo();
   },
   methods: {
-    getStudentInfo(){
-      console.log(this.$route.params.studentID);
+    getStudentInfo() {
       apiService.getStudentInfo(this.$route.params.studentID).then((res) => {
-        console.log(res);
         this.studentInfo = res.data.data;
       }).catch(e => {
           console.log(e)
+          if(e.message.includes("404")){
+            this.showMsg = "No Records found for Student ID " + this.$route.params.studentID;
+          }
         }
       )
     }
-  },
- /* beforeRouteEnter(to, from, next) {
-    let promises = [];
-    // console.log(this);
-    promises.push(
-      apiService.getStudentInfo(to.params.studentID).then((res) => {
-        console.log(res);
-        this.studentInfo = res.data.data;
-      }).catch(e => {
-          console.log(e)
-        }
-      )
-    );
-    Promise.allSettled(promises).then(() => {
-        next();
-      }
-    )
-  }*/
+  }
 }
 </script>

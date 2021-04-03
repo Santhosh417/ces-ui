@@ -12,7 +12,7 @@
             <p v-if="showMsg != ''" style="color: red">{{ showMsg }}</p>
           </b-col>
         </b-row>
-        <b-row class="mt-4 bg-light rounded p-5">
+        <b-row v-if="showMsg == ''" class="mt-4 bg-light rounded p-5">
           <b-col>
             <b-row>
               <b-col>
@@ -41,7 +41,7 @@
       </b-col>
     </b-row>
     <div>
-      <b-table-simple hover small caption-top responsive>
+      <b-table-simple v-if="showMsg == ''" hover small caption-top responsive>
         <caption><p class="h3">Enrollments:</p></caption>
         <b-thead head-variant="dark">
           <b-tr>

@@ -95,6 +95,8 @@ export default {
           console.log(e)
           if(e.message.includes("404")){
             this.showMsg = "No Records found for Student ID " + this.$route.params.studentID;
+          } else {
+            this.showMsg = e.message;
           }
         }
       )

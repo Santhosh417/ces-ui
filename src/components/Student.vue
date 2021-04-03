@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row>
-      <b-col cols="10" offset="0">
+      <b-col>
         <b-row>
           <b-col>
             <p class="h3 text-center">Student Profile</p>
@@ -9,7 +9,8 @@
         </b-row>
         <b-row>
           <b-col>
-            <p v-if="showMsg != ''" style="color: red">{{ showMsg }}</p>
+            <b-card v-if="showMsg != ''" style="{color : red}" class=" text-center bg-light">
+              <p>{{ showMsg }}</p></b-card>
           </b-col>
         </b-row>
         <b-row v-if="showMsg == ''" class="mt-4 bg-light rounded p-5">
@@ -46,24 +47,16 @@
         <b-thead head-variant="dark">
           <b-tr>
             <b-th>ID</b-th>
-            <b-th>Course ID</b-th>
+            <b-th>Course ID - Course Name</b-th>
             <b-th>Semester Name</b-th>
             <b-th>Start Date</b-th>
             <b-th>End Date</b-th>
             <b-th>Status</b-th>
             <b-th>Grade</b-th>
+            <b-th>Actions</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
-<!--          <b-tr>-->
-<!--            <b-td></b-td>-->
-<!--            <b-td></b-td>-->
-<!--            <b-td></b-td>-->
-<!--            <b-td></b-td>-->
-<!--            <b-td></b-td>-->
-<!--            <b-td></b-td>-->
-<!--            <b-td></b-td>-->
-<!--          </b-tr>-->
           <b-tr v-for="(enrollment, index) in $data.studentInfo.enrollments" :key="index">
             <b-td>{{ enrollment.id }}</b-td>
             <b-td>{{ enrollment.course_id }}</b-td>
@@ -72,6 +65,7 @@
             <b-td>{{ enrollment.end_date }}</b-td>
             <b-td>{{ enrollment.status }}</b-td>
             <b-td>{{ enrollment.grade }}</b-td>
+            <b-td><b-button v-if="enrollment.status == 'Planned' || (enrollment.status == 'Completed' && enrollment.grade != '')">Edit</b-button> <b-button v-if="enrollment.status == 'Planned'">Delete</b-button></b-td>
           </b-tr>
         </b-tbody>
         <b-tfoot>
@@ -117,3 +111,35 @@ export default {
   }
 }
 </script>
+<style scoped>
+@media only screen
+and (device-width : 375px)
+and (device-height : 812px)
+and (-webkit-device-pixel-ratio : 3) {
+
+  .h6 {
+    font-size: 2vw;
+  }
+
+  .h3 {
+    font-size: 5vw;
+    font-weight: bold;
+  }
+
+  .h4{
+    font-size: 4vw;
+  }
+
+  a{
+    font-size: 3vw;
+  }
+
+  .p{
+    font-size: 3vw;
+  }
+
+  h6 {
+    font-size: 2vw !important;
+  }
+}
+</style>

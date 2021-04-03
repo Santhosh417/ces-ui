@@ -11,10 +11,11 @@ export class APIService {
 
   getStudentInfo(param_pk) {
     const url = `${API_URL}api/students/${param_pk}`;
-    let jwtToken = localStorage.getItem('token');
-    console.log(":::jwtToken:::::"+jwtToken);
-    const headers = {Authorization: `jwt ${jwtToken}`};
-    const response = axios.get(url, {headers: headers});
+    let token = localStorage.getItem('token');
+    console.log(":::token:::::"+token);
+    const response = axios.get(url, {headers: {
+      'Authorization': 'Token ' + token
+    }});
     console.log(":::response:::::"+response);
 
     return response;

@@ -1,13 +1,13 @@
 <template>
   <b-container>
     <b-row>
-      <b-col cols="6" offset="3">
+      <b-col>
         <b-row>
           <b-col>
-            <p class="h3 text-center" >Login</p>
+            <p class="h3 text-center">Login</p>
           </b-col>
         </b-row>
-        <b-row class="mt-4 bg-light rounded p-5">
+        <b-row class="mt-sm-4 bg-light rounded p-sm-5">
           <b-col>
             <b-row>
               <b-col>
@@ -23,7 +23,7 @@
                   >
 
                     <b-form-input
-                      id="email"
+                      id="username"
                       v-model="$data.username"
                       name="username"
                       :state="this.$data.usernameValid"
@@ -62,7 +62,7 @@
                     </b-form-invalid-feedback>
                   </b-form-group>
                 </form>
-                <b-button class="float-right" variant="primary" @click="login">Log in</b-button>
+                <b-button class="float-right login-button" @click="login" id="loginBtn">Login</b-button>
               </b-col>
             </b-row>
           </b-col>
@@ -145,3 +145,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.login-button{
+  background-color: #000000;
+  color:white;
+}
+</style>

@@ -99,4 +99,35 @@ export default {
   background-color: #000000;
   color:white;
 }
+
+@media only screen
+and (device-width : 375px)
+and (device-height : 812px)
+and (-webkit-device-pixel-ratio : 3) {
+
+  .h6 {
+    font-size: 2vw;
+  }
+
+  .h3 {
+    font-size: 5vw;
+    font-weight: bold;
+  }
+
+  .h4{
+    font-size: 4vw;
+  }
+
+  a{
+    font-size: 3vw;
+  }
+
+  .p{
+    font-size: 3vw;
+  }
+
+  h6 {
+    font-size: 2vw !important;
+  }
+}
 </style>

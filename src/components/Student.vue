@@ -21,11 +21,15 @@
               </b-col>
             </b-row>
             <b-row>
+              <b-col><strong>Student NUID:  </strong>{{ $data.studentInfo.nuid }}</b-col>
+            </b-row>
+            <b-row>
               <b-col><strong>Student Email: </strong> {{ $data.studentInfo.email }}</b-col>
             </b-row>
             <b-row>
               <b-col><strong>Student Cell Phone:  </strong>{{ $data.studentInfo.cell_phone }}</b-col>
             </b-row>
+
             <b-row>
               <b-col><strong>Start Date: </strong> {{ $data.studentInfo.start_date }}</b-col>
             </b-row>
@@ -51,7 +55,16 @@
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="enrollment in $data.studentInfo.enrollments">
+<!--          <b-tr>-->
+<!--            <b-td></b-td>-->
+<!--            <b-td></b-td>-->
+<!--            <b-td></b-td>-->
+<!--            <b-td></b-td>-->
+<!--            <b-td></b-td>-->
+<!--            <b-td></b-td>-->
+<!--            <b-td></b-td>-->
+<!--          </b-tr>-->
+          <b-tr v-for="(enrollment, index) in $data.studentInfo.enrollments" :key="index">
             <b-td>{{ enrollment.id }}</b-td>
             <b-td>{{ enrollment.course_id }}</b-td>
             <b-td>{{ enrollment.semester_name }}</b-td>

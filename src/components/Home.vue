@@ -1,7 +1,23 @@
 <template>
   <b-container>
-
-    <template>
+    <b-row >
+      <b-col class="col-sm-7"></b-col>
+      <b-col class="col-sm-5 mb-sm-3 mt-sm-3 float-right">
+        <b-row>
+          <b-col class="col-sm-8">
+            <b-input-group class="mb-sm-2">
+              <b-input-group-prepend is-text>
+                <b-icon icon="search"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input type="search" v-model="studentID" placeholder="Enter Student NUID" @input="validateStudentID"/>
+            </b-input-group>
+          </b-col>
+          <b-col class="col-sm-4">
+            <b-button :to="{name:'student', params:{studentID : studentID}}" class="btn-primary">Search</b-button>
+          </b-col>
+        </b-row>
+      </b-col>
+    </b-row>
       <div class="carousel">
         <b-carousel
           id="carousel-1"
@@ -21,7 +37,7 @@
             :img-src="image" :key="image"
           >
           </b-carousel-slide>
-<!-- 
+<!--
           <b-carousel-slide
             img-src="https://www.unomaha.edu/about-uno/buildings-and-maps/_assets/img/170619_BaxterArena_146a-facade.jpg">
           </b-carousel-slide>
@@ -50,11 +66,6 @@
       <div class="content">
         <p><b>UNO is dedicated to the city and state in our name. As the University of Nebraska's metropolitan university campus, no fences or barriers separate students from the opportunities offered by the greater Omaha area. We address real issues, providing relevant learning opportunities that uniquely prepare our graduates as professionals and active members of their community.</b></p>
       </div>
-
-
-          
-    </template>
-
   </b-container>
 </template>
 
@@ -63,56 +74,29 @@ import {APIService} from '../http/APIServices';
 const apiService = new APIService();
 export default {
   name: 'Home',
-  data(){ return {
-    credentials: {},
-    studentID: null,
-    studentIDValid: null,
-    studentIDInvalidText: '',
-    valid: true,
-    showMsg: '',
-    loading: false,
-    rules: {
-      studentID: [
-        v => !!v || "Student ID is required",
-        v => (v && v.length > 3) || "A username must be more than 3 characters long",
-        v => /^[0-9_]+$/.test(v) || "A username can only contain digits only"
-      ]
-    },
-  }
-
-// name: "Home",
-//   data: () => ({
-//     authenticated: false,
-//     validUserName : '',
-//     images: ['https://www.unomaha.edu/news/2018/10/img/ash-fall1.jpg','https://www.unomaha.edu/about-uno/buildings-and-maps/_assets/img/170619_BaxterArena_146a-facade.jpg', 'https://hollandbasham.com/wp-content/uploads/2016/11/SC-08-1.jpg' ]
-//   }),
-//   mounted() {
-//     this.getUser();
-
-//   },
-
+  data() {
+    return {
+      images: ['https://www.unomaha.edu/news/2018/10/img/ash-fall1.jpg', 'https://www.unomaha.edu/about-uno/buildings-and-maps/_assets/img/170619_BaxterArena_146a-facade.jpg', 'https://hollandbasham.com/wp-content/uploads/2016/11/SC-08-1.jpg'],
+      credentials: {},
+      studentID: null,
+      studentIDValid: null,
+      studentIDInvalidText: '',
+      valid: true,
+      showMsg: '',
+      loading: false,
+      rules: {
+        studentID: [
+          v => !!v || "Student ID is required",
+          v => (v && v.length > 3) || "A Student ID be more than 3 characters long",
+          v => /^[0-9_]+$/.test(v) || "A Student ID can only contain digits only"
+        ]
+      },
+    }
+  },
   methods: {
-    // getStudentInfo() {
-    //   this.loading = true;
-    //   apiService.getStudentInfo(this.studentID).then((res)=>{
-    //     console.log(res)
-    //     localStorage.setItem('student_info', res, res.data);
-    //     //router.push("/");
-    //     //router.go(-1);
-    //     window.location = "/student/:student"
-    //   }).catch(e => {
-    //     console.log(e)
-    //
-    //     this.loading = false;
-    //     localStorage.removeItem('student_info');
-    //     // router.go(-1);
-    //     this.showMsg = 'No Student Found';
-    //   })
-    // },
-    validateStudentID() {
+    validateStudentID(){
       if (this.$data.studentID != null && this.$data.studentID.match(/^[0-9_]+$/)) {
         this.$data.studentIDInvalidText = '';
-        // this.$data.credentials.username = this.$data.username
         return true;
       }
       this.$data.emailInvalidText = 'Please enter a valid Student ID'
@@ -139,5 +123,12 @@ export default {
 }
 
 
- 
+.btn-primary{
+  background-color: #000000;
+  color: white;
+}
+
+.search-element{
+  background-color: grey;
+}
 </style>

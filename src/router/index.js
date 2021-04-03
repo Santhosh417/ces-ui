@@ -24,8 +24,13 @@ export default new Router({
       component: Login
     },
     {
-      path: '/student/:student',
+      path: '/student/:studentID',
       name: 'student',
+      props: (route) => {
+        return {
+          studentID: route.params.studentID
+        }
+      },
       component: Student
     },
     {

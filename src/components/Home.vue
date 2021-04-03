@@ -38,7 +38,7 @@
                     </b-form-invalid-feedback>
                   </b-form-group>
                 </form>
-                <b-button class="float-right" variant="primary" @click="getStudentInfo">Get Student</b-button>
+                <b-button class="float-right" variant="primary" :to="{ name: 'student', params: {studentID: $data.studentID}}">Get Student</b-button>
               </b-col>
             </b-row>
           </b-col>
@@ -53,7 +53,7 @@ import {APIService} from '../http/APIServices';
 const apiService = new APIService();
 export default {
   name: 'Home',
-  data: () => ({
+  data(){ return {
     credentials: {},
     studentID: null,
     studentIDValid: null,
@@ -67,26 +67,28 @@ export default {
         v => (v && v.length > 3) || "A username must be more than 3 characters long",
         v => /^[0-9_]+$/.test(v) || "A username can only contain digits only"
       ]
-    }
-  }),
-  methods: {
-    getStudentInfo() {
-      this.loading = true;
-      apiService.getStudentInfo(this.studentID).then((res)=>{
-        console.log(res)
-        localStorage.setItem('student_info', res, res.data);
-        //router.push("/");
-        //router.go(-1);
-        window.location = "/student/:student"
-      }).catch(e => {
-        console.log(e)
-
-        this.loading = false;
-        localStorage.removeItem('student_info');
-        // router.go(-1);
-        this.showMsg = 'No Student Found';
-      })
     },
+  }
+  },
+
+  methods: {
+    // getStudentInfo() {
+    //   this.loading = true;
+    //   apiService.getStudentInfo(this.studentID).then((res)=>{
+    //     console.log(res)
+    //     localStorage.setItem('student_info', res, res.data);
+    //     //router.push("/");
+    //     //router.go(-1);
+    //     window.location = "/student/:student"
+    //   }).catch(e => {
+    //     console.log(e)
+    //
+    //     this.loading = false;
+    //     localStorage.removeItem('student_info');
+    //     // router.go(-1);
+    //     this.showMsg = 'No Student Found';
+    //   })
+    // },
     validateStudentID() {
       if (this.$data.studentID != null && this.$data.studentID.match(/^[0-9_]+$/)) {
         this.$data.studentIDInvalidText = '';

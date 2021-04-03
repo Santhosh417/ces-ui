@@ -2,7 +2,7 @@
   <b-container>
     <b-row >
       <b-col class="col-sm-7"></b-col>
-      <b-col class="col-sm-5 mb-sm-3 mt-sm-3 float-right">
+      <b-col v-if="credentials.authenticates" class="col-sm-5 mb-sm-3 mt-sm-3 float-right">
         <b-row>
           <b-col class="col-sm-8">
             <b-input-group class="mb-sm-2">
@@ -77,7 +77,9 @@ export default {
   data() {
     return {
       images: ['https://www.unomaha.edu/news/2018/10/img/ash-fall1.jpg', 'https://www.unomaha.edu/about-uno/buildings-and-maps/_assets/img/170619_BaxterArena_146a-facade.jpg', 'https://hollandbasham.com/wp-content/uploads/2016/11/SC-08-1.jpg'],
-      credentials: {},
+      credentials: {
+        authenticates: localStorage.getItem('isAuthenticates')
+      },
       studentID: null,
       studentIDValid: null,
       studentIDInvalidText: '',

@@ -1,52 +1,5 @@
 <template>
   <b-container>
-<<<<<<< Updated upstream
-    <b-row>
-      <b-col cols="6" offset="3">
-        <b-row>
-          <b-col>
-            <p class="h3 text-center" >Search Student</p>
-          </b-col>
-        </b-row>
-        <b-row class="mt-4 bg-light rounded p-5">
-          <b-col>
-            <b-row>
-              <b-col>
-                <form>
-                  <p v-if="showMsg != ''" style="color: red">{{showMsg}}</p>
-                  <b-form-group
-                    id="group0"
-                    label-cols-sm="4"
-                    label-cols-lg="3"
-                    :description="'Enter student id'"
-                    :label="'Student ID'"
-                    label-for="studentID"
-                  >
-
-                    <b-form-input
-                      id="studentID"
-                      v-model="$data.studentID"
-                      name="studentID"
-                      :state="this.$data.studentIDValid"
-                      ref="studentID"
-                      aria-describedby="studentIDInvalidFeedback"
-                      :trim="Boolean(1)"
-                      @change="$data.studentIDValid = validateStudentID()"
-                      required
-                    ></b-form-input>
-                    <b-form-invalid-feedback id="usernameInvalidFeedback">
-                      {{ this.$data.usernameInvalidText }}
-                    </b-form-invalid-feedback>
-                  </b-form-group>
-                </form>
-                <b-button class="float-right" variant="primary" :to="{ name: 'student', params: {studentID: $data.studentID}}">Get Student</b-button>
-              </b-col>
-            </b-row>
-          </b-col>
-        </b-row>
-      </b-col>
-    </b-row>
-=======
 
     <template>
       <div class="carousel">
@@ -102,7 +55,6 @@
           
     </template>
 
->>>>>>> Stashed changes
   </b-container>
 </template>
 
@@ -110,7 +62,6 @@
 import {APIService} from '../http/APIServices';
 const apiService = new APIService();
 export default {
-<<<<<<< Updated upstream
   name: 'Home',
   data(){ return {
     credentials: {},
@@ -128,17 +79,17 @@ export default {
       ]
     },
   }
-=======
-name: "Home",
-  data: () => ({
-    authenticated: false,
-    validUserName : '',
-    images: ['https://www.unomaha.edu/news/2018/10/img/ash-fall1.jpg','https://www.unomaha.edu/about-uno/buildings-and-maps/_assets/img/170619_BaxterArena_146a-facade.jpg', 'https://hollandbasham.com/wp-content/uploads/2016/11/SC-08-1.jpg' ]
-  }),
-  mounted() {
-    this.getUser();
->>>>>>> Stashed changes
-  },
+
+// name: "Home",
+//   data: () => ({
+//     authenticated: false,
+//     validUserName : '',
+//     images: ['https://www.unomaha.edu/news/2018/10/img/ash-fall1.jpg','https://www.unomaha.edu/about-uno/buildings-and-maps/_assets/img/170619_BaxterArena_146a-facade.jpg', 'https://hollandbasham.com/wp-content/uploads/2016/11/SC-08-1.jpg' ]
+//   }),
+//   mounted() {
+//     this.getUser();
+
+//   },
 
   methods: {
     // getStudentInfo() {

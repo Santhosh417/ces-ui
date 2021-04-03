@@ -5,9 +5,15 @@
           <b-col class="col-sm-1 mr-sm-5">
             <b-img :src="require('@/assets/images/university-o.png')" fluid></b-img>
           </b-col>
+<<<<<<< Updated upstream
           <b-col class="col-sm-9 mt-sm-3">
             <b-row class="h3">
               <p>UNIVERSITY OF NEBRASKA OMAHA</p>
+=======
+          <b-col cols="9" class="mt-3">
+            <b-row>
+              <p class="h3">UNIVERSITY OF NEBRASKA Omaha</p>
+>>>>>>> Stashed changes
             </b-row>
             <b-row>
               <p class="h4">Course Management System</p>
@@ -22,8 +28,16 @@
             <b-button :to="{ name: 'login' }" class="float-right" id="loginButton">Login</b-button>
           </b-col>
         </b-row>
+<<<<<<< Updated upstream
       </div>
       <b-nav tabs align="right" class="navigation-bar">
+=======
+      </b-container>
+    </div>
+    <div class="navigation-bar">
+      <b-nav tabs align="right">
+        <b-nav-item link-classes="navigation-bar" :to="{ name: 'home' }">Home</b-nav-item>
+>>>>>>> Stashed changes
         <b-nav-item link-classes="navigation-bar" :to="{ name: 'aboutUs' }">About us</b-nav-item>
         <b-nav-item  link-classes="navigation-bar"  :to="{ name: 'alumni' }">Alumni</b-nav-item>
         <b-nav-item  link-classes="navigation-bar" :to="{ name: 'contactUs' }">Contact Us</b-nav-item>

@@ -41,7 +41,7 @@
         </b-row>
       </b-col>
     </b-row>
-    <b-row class="mt-3">
+    <b-row class="mt-3" v-if="$data.studentInfo.enrollments.length > 0">
       <b-col>
       <download-csv
         class   = "float-right cursor-pointer"
@@ -69,7 +69,10 @@
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="(enrollment, index) in $data.studentInfo.enrollments" :key="index">
+          <b-tr v-if="$data.studentInfo.enrollments.length == 0">
+            <b-td colspan="7" >No enrollment courses</b-td>
+          </b-tr>
+          <b-tr v-else v-for="(enrollment, index) in $data.studentInfo.enrollments" :key="index">
             <b-td>{{ enrollment.course_id }}</b-td>
             <b-td>{{ enrollment.semester_name }}</b-td>
             <b-td>{{(new Date(enrollment.start_date)).toLocaleString("en-US", {timeZone: 'UTC', month:'long', year :'numeric', day:'2-digit'})}}</b-td>

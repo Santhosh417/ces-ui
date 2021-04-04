@@ -65,7 +65,7 @@
             <b-td>{{ enrollment.end_date }}</b-td>
             <b-td>{{ enrollment.status }}</b-td>
             <b-td>{{ enrollment.grade }}</b-td>
-            <b-td><b-button v-if="enrollment.status == 'Planned' || (enrollment.status == 'Completed' && enrollment.grade != '')">Edit</b-button> <b-button v-if="enrollment.status == 'Planned'">Delete</b-button></b-td>
+            <b-td><b-button v-if="enrollment.status == 'Planned' || (enrollment.status == 'Completed' && enrollment.grade == '')">Edit</b-button> <b-button v-if="enrollment.status == 'Planned'">Delete</b-button></b-td>
           </b-tr>
         </b-tbody>
         <b-tfoot>

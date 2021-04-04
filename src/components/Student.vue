@@ -41,6 +41,7 @@
         </b-row>
       </b-col>
     </b-row>
+<div v-if="$data.studentInfo.enrollments != null">
     <b-row class="mt-3" v-if="$data.studentInfo.enrollments.length > 0">
       <b-col>
       <download-csv
@@ -98,6 +99,7 @@
       </b-table-simple>
     </div>
     <b-button class="btn-primary mb-5">Add a course to study plan</b-button>
+</div>
   </b-container>
 
 </template>

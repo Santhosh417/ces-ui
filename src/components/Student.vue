@@ -41,13 +41,25 @@
         </b-row>
       </b-col>
     </b-row>
+    <b-row class="mt-3">
+      <b-col>
+      <download-csv
+        class   = "float-right cursor-pointer"
+        :data   = "$data.studentInfo.enrollments"
+        :fields = "displayData"
+        :labels = "labels"
+        :name    =  "$data.studentInfo.nuid + '-' + $data.studentInfo.name+ '.csv'"
+      >
+        <b-button class="btn-primary"><b-icon icon="download"></b-icon>  Download Study Plan</b-button>
+      </download-csv>
+      </b-col>
+    </b-row>
     <div>
       <b-table-simple v-if="showMsg == ''" hover small caption-top responsive>
         <caption><p class="h3">Enrollments:</p></caption>
         <b-thead head-variant="dark">
           <b-tr>
-            <b-th>ID</b-th>
-            <b-th>Course ID - Course Name</b-th>
+            <b-th>Course</b-th>
             <b-th>Semester Name</b-th>
             <b-th>Start Date</b-th>
             <b-th>End Date</b-th>
@@ -58,14 +70,20 @@
         </b-thead>
         <b-tbody>
           <b-tr v-for="(enrollment, index) in $data.studentInfo.enrollments" :key="index">
-            <b-td>{{ enrollment.id }}</b-td>
             <b-td>{{ enrollment.course_id }}</b-td>
             <b-td>{{ enrollment.semester_name }}</b-td>
             <b-td>{{ enrollment.start_date }}</b-td>
             <b-td>{{ enrollment.end_date }}</b-td>
             <b-td>{{ enrollment.status }}</b-td>
-            <b-td>{{ enrollment.grade }}</b-td>
-            <b-td><b-button v-if="enrollment.status == 'Planned' || (enrollment.status == 'Completed' && enrollment.grade == '')">Edit</b-button> <b-button v-if="enrollment.status == 'Planned'">Delete</b-button></b-td>
+            <b-td>{{ enrollment.grade != ''  ? enrollment.grade : '-'}}</b-td>
+            <b-td>
+              <b-button v-if="enrollment.status == 'Planned' || (enrollment.status == 'Completed' && enrollment.grade == '')" class="btn-primary">
+                Edit
+              </b-button>
+              <b-button v-if="enrollment.status == 'Planned'" class="btn-primary">
+                Delete
+              </b-button>
+            </b-td>
           </b-tr>
         </b-tbody>
         <b-tfoot>
@@ -76,20 +94,27 @@
         </b-tfoot>
       </b-table-simple>
     </div>
+    <b-button class="btn-primary mb-5">Add a course to study plan</b-button>
   </b-container>
 
 </template>
 <script>
 import {APIService} from '../http/APIServices';
+import Vue from 'vue';
+import JsonCSV from 'vue-json-csv'
+
+Vue.component('downloadCsv', JsonCSV)
 const apiService = new APIService();
 export default {
-  name: 'Login',
+  name: 'Student',
   data: () => ({
     credentials: {},
     studentInfo: {},
     valid: true,
     showMsg: '',
-    loading: false
+    loading: false,
+    displayData: ['course_id', 'semester_name', 'start_date',  'end_date', 'status', 'grade'],
+    labels:{course_id:'Course' , semester_name : 'Semester', start_date:'Start Date', end_date:'End Date', status:'Status', grade:'Grade'}
   }),
   mounted() {
     this.getStudentInfo();
@@ -112,6 +137,12 @@ export default {
 }
 </script>
 <style scoped>
+
+.btn-primary{
+  background-color: #000000;
+  color: white;
+}
+
 @media only screen
 and (device-width : 375px)
 and (device-height : 812px)

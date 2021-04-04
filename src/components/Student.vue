@@ -32,10 +32,10 @@
             </b-row>
 
             <b-row>
-              <b-col><strong>Start Date: </strong> {{ $data.studentInfo.start_date }}</b-col>
+              <b-col><strong>Start Date: </strong> {{ (new Date($data.studentInfo.start_date)).toLocaleString("en-US", {timeZone: 'UTC', month:'long', year :'numeric', day:'2-digit'}) }}</b-col>
             </b-row>
             <b-row>
-              <b-col><strong>Expected Graduation Date: </strong>{{ $data.studentInfo.graduation_date }}</b-col>
+              <b-col><strong>Expected Graduation Date: </strong>{{ (new Date($data.studentInfo.graduation_date)).toLocaleString("en-US", {timeZone: 'UTC', month:'long', year :'numeric', day:'2-digit'})  }}</b-col>
             </b-row>
           </b-col>
         </b-row>
@@ -72,8 +72,8 @@
           <b-tr v-for="(enrollment, index) in $data.studentInfo.enrollments" :key="index">
             <b-td>{{ enrollment.course_id }}</b-td>
             <b-td>{{ enrollment.semester_name }}</b-td>
-            <b-td>{{ enrollment.start_date }}</b-td>
-            <b-td>{{ enrollment.end_date }}</b-td>
+            <b-td>{{(new Date(enrollment.start_date)).toLocaleString("en-US", {timeZone: 'UTC', month:'long', year :'numeric', day:'2-digit'})}}</b-td>
+            <b-td>{{(new Date(enrollment.end_date)).toLocaleString("en-US", {timeZone: 'UTC', month:'long', year :'numeric', day:'2-digit'}) }}</b-td>
             <b-td>{{ enrollment.status }}</b-td>
             <b-td>{{ enrollment.grade != ''  ? enrollment.grade : '-'}}</b-td>
             <b-td>

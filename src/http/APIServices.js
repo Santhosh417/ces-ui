@@ -21,4 +21,16 @@ export class APIService {
 
     return response;
   }
+
+  deleteEnrollment(param_pk) {
+    const url = `${API_URL}api/enrollments/${param_pk}`;
+    let token = localStorage.getItem('token');
+    console.log(":::url:::::"+url);
+    const response = axios.delete(url, {headers: {
+        'Authorization': 'Token ' + token
+      }});
+    console.log(":::response:::::"+response);
+
+    return response;
+  }
 }

@@ -6,6 +6,7 @@ import Student from '@/components/Student'
 import AboutUs from '@/components/AboutUs'
 import ContactUs from '@/components/ContactUs'
 import Alumni from '@/components/Alumni'
+import NewEnrollment from "../components/NewEnrollment";
 
 Vue.use(Router)
 
@@ -32,6 +33,16 @@ export default new Router({
         }
       },
       component: Student
+    },
+    {
+      path: '/student/:studentID/addCourseEnrollment',
+      name: 'addCourseEnrollment',
+      props: (route) => {
+        return {
+          studentID: route.params.studentID
+        }
+      },
+      component: NewEnrollment
     },
     {
       path: '/about-us',

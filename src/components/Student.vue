@@ -84,7 +84,7 @@
               <b-button v-if="enrollment.status == 'Planned' || (enrollment.status == 'Completed' && enrollment.grade == '')" class="btn-primary">
                 Edit
               </b-button>
-              <b-button v-if="enrollment.status == 'Planned'" class="btn-primary"   @click="deleteEnrollment(enrollment.id)">
+              <b-button v-if="enrollment.status == 'Planned'" class="btn-primary"   @click="deleteEnrollment(enrollment)">
                 Delete
               </b-button>
             </b-td>
@@ -138,20 +138,22 @@ export default {
         }
       )
     },
-    deleteEnrollment(enrollment_pk) {
-      apiService.deleteEnrollment(enrollment_pk).then((response) => {
-        if (response.status === 204) {
-          this.getStudentInfo();
-        }
-      }).catch(e => {
-          console.log(e)
-          if(e.message.includes("404")){
-            this.showMsg = "No Records found for Enrollment ID " + enrollment_pk;
-          } else {
-            this.showMsg = e.message;
+    deleteEnrollment(enrollment) {
+      if(confirm('Do you really want to delete enrollment to course: ' + enrollment.course_id)) {
+        apiService.deleteEnrollment(enrollment.id).then((response) => {
+          if (response.status === 204) {
+            this.getStudentInfo();
           }
-        }
-      )
+        }).catch(e => {
+            console.log(e)
+            if(e.message.includes("404")){
+              this.showMsg = "No Records found for Enrollment ID " + enrollment.id;
+            } else {
+              this.showMsg = e.message;
+            }
+          }
+        )
+      }
     }
   }
 }

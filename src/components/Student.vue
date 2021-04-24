@@ -143,24 +143,12 @@ export default {
           if (response.status === 204) {
             this.getStudentInfo();
           }
-<<<<<<< HEAD
         }
-      )
+      )}
     },
    updateEnrollment(enrollment_pk) {
       this.$router.push('/student/' +this.$route.params.studentID+'/enrollment/'+enrollment_pk);
-=======
-        }).catch(e => {
-            console.log(e)
-            if(e.message.includes("404")){
-              this.showMsg = "No Records found for Enrollment ID " + enrollment.id;
-            } else {
-              this.showMsg = e.message;
-            }
-          }
-        )
-      }
->>>>>>> e65c7d85c3823f66f8c401451d46d229d244089e
+
     }
   }
 }

@@ -6,6 +6,7 @@ import Student from '@/components/Student'
 import AboutUs from '@/components/AboutUs'
 import ContactUs from '@/components/ContactUs'
 import Alumni from '@/components/Alumni'
+import NewEnrollment from "../components/NewEnrollment";
 
 import  EnrollmentUpdate from '@/components/EnrollmentUpdate'
 
@@ -45,6 +46,17 @@ export default new Router({
           studentID: route.params.enrollmentID
         }
       }
+    }, 
+   {
+      path: '/student/:studentID/addCourseEnrollment',
+      name: 'addCourseEnrollment',
+      props: (route) => {
+        return {
+          studentID: route.params.studentID
+        }
+      },
+      component: NewEnrollment
+
     },
     {
       path: '/about-us',

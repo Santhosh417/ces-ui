@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
-const API_URL = 'http://127.0.0.1:8000/';
-//const API_URL = 'https://ces-service.herokuapp.com/';
+// const API_URL = 'http://127.0.0.1:8000/';
+const API_URL = 'https://ces-service.herokuapp.com/';
 export class APIService {
   constructor() {
   }
@@ -52,6 +52,30 @@ export class APIService {
     const response = axios.delete(url, {headers: {
         'Authorization': 'Token ' + token
       }});
+    console.log(":::response:::::"+response);
+
+    return response;
+  }
+
+  getCourses(param_pk){
+    const url = `${API_URL}api/getCourses/${param_pk}`;
+    let token = localStorage.getItem('token');
+    console.log(":::url:::::"+url);
+    const response = axios.get(url, {headers: {
+        'Authorization': 'Token ' + token
+      }});
+    console.log(":::response:::::"+response);
+
+    return response;
+  }
+
+  addEnrollment(enrollment) {
+    const url = `${API_URL}api/enrollments/`;
+    let token = localStorage.getItem('token');
+    console.log(":::url:::::" + url);
+    const response = axios.post(url, enrollment, {headers: {
+        'Authorization': 'Token ' + token
+      } });
     console.log(":::response:::::"+response);
 
     return response;

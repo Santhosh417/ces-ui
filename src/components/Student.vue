@@ -84,7 +84,7 @@
               <b-button  v-if="enrollment.status.localeCompare('Planned') || (enrollment.status == 'Completed' && enrollment.grade == '')" class="btn-primary" @click="updateEnrollment(enrollment.id)">
                 Edit
               </b-button>
-              <b-button v-if="enrollment.status.localeCompare('Planned')" class="btn-primary"   @click="deleteEnrollment(enrollment.id)">
+              <b-button v-if="enrollment.status == 'Planned'" class="btn-primary"   @click="deleteEnrollment(enrollment)">
                 Delete
               </b-button>
             </b-td>
@@ -98,7 +98,7 @@
         </b-tfoot>
       </b-table-simple>
     </div>
-    <b-button class="btn-primary mb-5">Add a course to study plan</b-button>
+    <b-button :to="{name:'addCourseEnrollment', params:{studentID : $data.studentInfo.pk}}" class="btn-primary mb-5">Add a course to study plan</b-button>
 </div>
   </b-container>
 
@@ -137,23 +137,30 @@ export default {
         }
       )
     },
-    deleteEnrollment(enrollment_pk) {
-      apiService.deleteEnrollment(enrollment_pk).then((response) => {
-        if (response.status === 204) {
-          this.getStudentInfo();
-        }
-      }).catch(e => {
-          console.log(e)
-          if(e.message.includes("404")){
-            this.showMsg = "No Records found for Enrollment ID " + enrollment_pk;
-          } else {
-            this.showMsg = e.message;
+    deleteEnrollment(enrollment) {
+      if(confirm('Do you really want to delete enrollment to course: ' + enrollment.course_id)) {
+        apiService.deleteEnrollment(enrollment.id).then((response) => {
+          if (response.status === 204) {
+            this.getStudentInfo();
           }
+<<<<<<< HEAD
         }
       )
     },
    updateEnrollment(enrollment_pk) {
       this.$router.push('/student/' +this.$route.params.studentID+'/enrollment/'+enrollment_pk);
+=======
+        }).catch(e => {
+            console.log(e)
+            if(e.message.includes("404")){
+              this.showMsg = "No Records found for Enrollment ID " + enrollment.id;
+            } else {
+              this.showMsg = e.message;
+            }
+          }
+        )
+      }
+>>>>>>> e65c7d85c3823f66f8c401451d46d229d244089e
     }
   }
 }

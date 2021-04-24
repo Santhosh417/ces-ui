@@ -81,10 +81,10 @@
             <b-td>{{ enrollment.status }}</b-td>
             <b-td>{{ enrollment.grade != ''  ? enrollment.grade : '-'}}</b-td>
             <b-td>
-              <b-button v-if="enrollment.status == 'Planned' || (enrollment.status == 'Completed' && enrollment.grade == '')" class="btn-primary">
+              <b-button  v-if="enrollment.status.localeCompare('Planned') || (enrollment.status == 'Completed' && enrollment.grade == '')" class="btn-primary" @click="updateEnrollment(enrollment.id)">
                 Edit
               </b-button>
-              <b-button v-if="enrollment.status == 'Planned'" class="btn-primary"   @click="deleteEnrollment(enrollment.id)">
+              <b-button v-if="enrollment.status.localeCompare('Planned')" class="btn-primary"   @click="deleteEnrollment(enrollment.id)">
                 Delete
               </b-button>
             </b-td>
@@ -107,7 +107,6 @@
 import {APIService} from '../http/APIServices';
 import Vue from 'vue';
 import JsonCSV from 'vue-json-csv'
-
 Vue.component('downloadCsv', JsonCSV)
 const apiService = new APIService();
 export default {
@@ -152,6 +151,9 @@ export default {
           }
         }
       )
+    },
+   updateEnrollment(enrollment_pk) {
+      this.$router.push('/student/' +this.$route.params.studentID+'/enrollment/'+enrollment_pk);
     }
   }
 }

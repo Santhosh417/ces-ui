@@ -60,7 +60,7 @@
             <label for="">Status:</label>
             <input  :disabled="disable" type="text" v-model="form.status"/>
         </div>
-        <div class="col" v-if = "form.status !== 'planned'">
+        <div class="col" v-if = "form.status !== 'Planned'">
             <label for="">Grade:</label>
             <input  type="text" v-model="form.grade">
         </div>
@@ -93,7 +93,7 @@ methods: {
         console.log(this.$route.params.enrollmentID);
          apiService.getEnrollment(this.$route.params.enrollmentID).then((res) => {
         this.form = res.data.data;
-        if(this.form.status === 'planned'){
+        if(this.form.status === 'Planned'){
             this.disable = true;
         }
         else if(this.form.status === 'completed'){

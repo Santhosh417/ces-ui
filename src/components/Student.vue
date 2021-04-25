@@ -81,7 +81,7 @@
             <b-td>{{ enrollment.status }}</b-td>
             <b-td>{{ enrollment.grade != ''  ? enrollment.grade : '-'}}</b-td>
             <b-td>
-              <b-button  v-if="enrollment.status.localeCompare('Planned') || (enrollment.status == 'Completed' && enrollment.grade == '')" class="btn-primary" @click="updateEnrollment(enrollment.id)">
+              <b-button  v-if="enrollment.status == 'Planned' || (enrollment.status == 'Completed' && enrollment.grade == '')" class="btn-primary" @click="updateEnrollment(enrollment.id)">
                 Edit
               </b-button>
               <b-button v-if="enrollment.status == 'Planned'" class="btn-primary"   @click="deleteEnrollment(enrollment)">

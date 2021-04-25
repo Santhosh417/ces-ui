@@ -96,7 +96,7 @@ methods: {
         if(this.form.status === 'Planned'){
             this.disable = true;
         }
-        else if(this.form.status === 'completed'){
+        else if(this.form.status === 'Completed'){
             this.disable = true;
         }
       }).catch(e => {
@@ -143,7 +143,7 @@ methods: {
 },
 computed: {
     completeStatus(){
-        if(this.form.status === 'completed'){
+        if(this.form.status === 'Completed'){
              return true;
         }
        else{

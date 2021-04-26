@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-container>
         <b-row class="mt-5">
           <b-col>
             <b-img src="https://www.unomaha.edu/news/2020/03/img/ayailovenu-f.jpg" alt="Student" fluid/>

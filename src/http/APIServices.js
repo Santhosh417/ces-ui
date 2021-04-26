@@ -37,13 +37,13 @@ export class APIService {
   updateEnrollment(param_pk, body){
     console.log('Hi');
     const url = `${API_URL}api/enrollments/${param_pk}`;
-    let jwtToken = localStorage.getItem('token');
+    let token = localStorage.getItem('token');
      console.log(":::url:::::"+url);
-     const response = axios.put(url, body);
+     const response = axios.put(url, body, {headers: {
+         'Authorization': 'Token ' + token
+       }});
      console.log(":::response:::::"+response);
-
     return response;
-
   }
   deleteEnrollment(param_pk) {
     const url = `${API_URL}api/enrollments/${param_pk}`;

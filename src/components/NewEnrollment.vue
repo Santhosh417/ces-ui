@@ -205,7 +205,7 @@ name: 'NewEnrollment',
           if (response.status === 201) {
             console.log(response.data)
             this.$data.courses = response.data;
-            window.location = "/student/"+localStorage.getItem("student_nuid")
+            this.$router.go(-1);
           }else{
             this.showMsg = "No courses remaining";
           }

@@ -1,7 +1,7 @@
 <template>
  <b-container>
    <div v-if=" accessError != ''">
-     <b-row>
+     <b-row class="mt-4">
        <b-col>
          <b-card class=" text-center bg-light">
            <p>{{accessError}}</p></b-card>
@@ -24,6 +24,7 @@
    </b-row>
    <b-row>
      <b-col cols="6">
+       <p v-if="showMsg != ''" style="color: red">{{showMsg}}</p>
        <b-form-group
          id="course-field"
          label="Course *"
@@ -193,6 +194,7 @@ name: 'NewEnrollment',
       this.$data.states.startDateState  = null;
       this.$data.states.endDateState  = null;
       this.$data.states.semesterState  = null;
+      this.$data.showMsg = '';
     },
     submit(){
       if(this.validateCourse() && this.validateSemester()){
@@ -203,7 +205,7 @@ name: 'NewEnrollment',
           if (response.status === 201) {
             console.log(response.data)
             this.$data.courses = response.data;
-            window.location = "/"
+            window.location = "/student/"+localStorage.getItem("student_nuid")
           }else{
             this.showMsg = "No courses remaining";
           }
@@ -211,13 +213,15 @@ name: 'NewEnrollment',
           if (error.response.status === 401) {
             this.showMsg = "error";
           }else if (error.response.status === 400) {
-            this.showMsg = "error";
+            this.showMsg = "Please select semester before enrollment.";
           } else if (error.response.status === 403) {
             this.accessError = "You are not authorized to perform this action.";
           }else {
             this.showMsg = "error";
           }
         });
+      }else{
+        this.showMsg = "Please select a course before enrollment.";
       }
     }
   },

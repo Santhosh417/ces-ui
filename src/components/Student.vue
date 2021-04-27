@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <b-row>
+        <b-row class="mt-4">
           <b-col>
             <b-card v-if="showMsg != ''" style="{color : red}" class=" text-center bg-light">
               <p>{{ showMsg }}</p></b-card>
@@ -129,6 +129,7 @@ export default {
     getStudentInfo() {
       apiService.getStudentInfo(this.$route.params.studentID).then((res) => {
         this.studentInfo = res.data.data;
+        localStorage.setItem('student_nuid',this.$route.params.studentID);
       }).catch(e => {
           console.log(e)
           if(e.message.includes("404")){

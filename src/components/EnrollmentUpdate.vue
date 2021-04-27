@@ -2,7 +2,7 @@
     <b-container>
     <b-row>
       <b-col>
-        <b-row>
+        <b-row class="mt-4">
           <b-col>
             <b-card v-if="showMsg != ''" style="{color : red}" class=" text-center bg-light">
               <p>{{ showMsg }}</p></b-card>

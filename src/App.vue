@@ -6,11 +6,15 @@
             <b-img :src="require('@/assets/images/university-o.png')" fluid></b-img>
           </b-col>
           <b-col class="col-sm-9 mt-sm-3">
-            <b-row class="h3">
-              <p>UNIVERSITY OF NEBRASKA OMAHA</p>
+            <b-row>
+              <b-col class="h3">
+              UNIVERSITY OF NEBRASKA OMAHA
+              </b-col>
             </b-row>
             <b-row>
-              <p class="h4">Course Management System</p>
+              <b-col class="h4">
+                Course Management System
+              </b-col>
             </b-row>
           </b-col>
           <b-col v-if="authenticated" class="col-sm-1 mt-sm-3 ml-sm-5">

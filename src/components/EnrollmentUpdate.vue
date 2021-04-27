@@ -41,9 +41,9 @@
         </b-row>
       </b-col>
     </b-row>
-    
-<form class="justify-content-center" @submit.prevent="OnSubmit">
-    <!-- <div> 
+
+<form class="justify-content-center mt-5" @submit.prevent="OnSubmit">
+    <!-- <div>
         <label for="">Course:</label>
         <input :disabled="disable" type="text" v-model= "form.course.course_name" /> {{form.course}}
     </div>
@@ -51,21 +51,83 @@
         <label for="">Student:</label>
         <input :disabled="disable" type="text" v-model="form.student"/>
     </div> -->
-    <div class="form-row">
-        <div class="col">
-            <label for="">Semester name:</label>
-            <input  :disabled="completeStatus" type="text" v-model="form.semester_name"/>
-        </div>
-        <div class="col">
-            <label for="">Status:</label>
-            <input  :disabled="disable" type="text" v-model="form.status"/>
-        </div>
-        <div class="col" v-if = "form.status !== 'Planned'">
-            <label for="">Grade:</label>
-            <input  type="text" v-model="form.grade">
-        </div>
-        <button class="btn btn-primary mb-2">Submit</button>
-    </div>
+    <b-row>
+      <b-col>
+        <b-form-group
+          id="semester-field"
+          label="Semester *"
+          description="example: Summer 2021"
+          label-for="semester"
+          label-cols-sm="3"
+          label-cols-lg="2"
+        >
+          <b-form-input
+            id="semester"
+            :disabled="completeStatus"
+            type="text"
+            :state="states.semesterState"
+            v-model="form.semester_name"
+            @change="states.semesterState = validateSemester()"
+            :trim="Boolean(1)"
+          ></b-form-input>
+          <b-form-invalid-feedback id="semesterInvalidText">
+            Please enter a valid Semester
+          </b-form-invalid-feedback>
+        </b-form-group>
+      </b-col>
+    </b-row>
+      <b-row>
+        <b-col>
+          <b-form-group
+            id="status-field"
+            label="Status *"
+            label-for="status"
+            label-cols-sm="3"
+            label-cols-lg="2"
+          >
+            <b-form-input
+              id="status"
+              disabled
+              type="text"
+              v-model="form.status"
+              :trim="Boolean(1)"
+            ></b-form-input>
+          </b-form-group>
+<!--            <label >Status:</label>-->
+<!--            <input  :disabled="disable" type="text" v-model="form.status"/>-->
+        </b-col>
+      </b-row>
+  <b-row>
+        <b-col v-if = "form.status !== 'Planned'">
+          <b-form-group
+            id="grade-field"
+            label="Grade *"
+            label-for="grade"
+            label-cols-sm="3"
+            label-cols-lg="2"
+          >
+            <b-form-input
+              id="grade"
+              type="text"
+              v-model="form.grade"
+              :placeholder="$data.form.grade"
+              :trim="Boolean(1)"
+              :state="states.gradeState"
+              @change="states.gradeState = validateGrade()"
+              required
+            ></b-form-input>
+            <b-form-invalid-feedback id="nameInvalidText">
+              Please enter a valid grade
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+      </b-row>
+  <b-row class="float-right">
+    <b-col>
+        <b-button class="btn-primary" @click="OnSubmit()">Submit</b-button>
+      </b-col>
+  </b-row>
+
 </form>
 </b-container>
 </template>
@@ -80,7 +142,11 @@ export default {
      form:{},
      showMsg: '',
      disable: false,
-     studentInfo: {}
+     studentInfo: {},
+      states :{
+        semesterState : null,
+        gradeState: null,
+      },
     };
   },
   created(){
@@ -88,6 +154,20 @@ export default {
       this.getStudentInfo();
   },
 methods: {
+    validateSemester(){
+      let validation = true;
+      if(this.$data.form.semester_name === null){
+        validation = false;
+      }
+      return validation;
+    },
+    validateGrade(){
+      let validation = true;
+      if(this.$data.form.grade === null && this.$data.form.status === 'Completed'){
+        validation = false;
+      }
+      return validation;
+    },
     enrollmentEdit() {
         this.disable = false;
         console.log(this.$route.params.enrollmentID);
@@ -123,22 +203,23 @@ methods: {
       )
     },
     OnSubmit(){
-        console.log('hih fjl');
-        apiService.updateEnrollment(this.$route.params.enrollmentID, this.$data.form).then(response => {
-          if (response.status === 200) {
-            console.log('saveupdating'+response.data)
-            this.$data.form = response.data;
-           this.$router.go(-1);
-          } else {
-            this.showMsg = "No courses remaining";
-          }
-        }).catch(error => {
-          if (error.response.status === 401) {
-            this.showMsg = "error";
-          } else if (error.response.status === 400) {
-            this.showMsg = "error";
-          }
-        });
+        if(this.validateSemester() && this.validateGrade()) {
+          apiService.updateEnrollment(this.$route.params.enrollmentID, this.$data.form).then(response => {
+            if (response.status === 200) {
+              console.log('saveupdating' + response.data)
+              this.$data.form = response.data;
+              this.$router.go(-1);
+            } else {
+              this.showMsg = "No courses remaining";
+            }
+          }).catch(error => {
+            if (error.response.status === 401) {
+              this.showMsg = "error";
+            } else if (error.response.status === 400) {
+              this.showMsg = "error";
+            }
+          });
+        }
     }
 },
 computed: {

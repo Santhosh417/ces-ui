@@ -1,5 +1,14 @@
 <template>
  <b-container>
+   <div v-if="courses.length === 0">
+   <b-row>
+     <b-col>
+       <b-card class=" text-center bg-light">
+         <p>The student has taken all the available courses.</p></b-card>
+     </b-col>
+   </b-row>
+   </div>
+   <div v-else>
    <b-row>
      <b-col class="h4">
        Add Course Enrollment
@@ -67,51 +76,6 @@
      </b-col>
    </b-row>
    <b-row>
-     <b-col>
-       <b-form-group
-         id="start-date-field"
-         label="Start Date *"
-         label-for="start-date"
-         label-class="col-form-label"
-         :state="$data.states.startDateState"
-       >
-         <b-form-datepicker
-           id="start-date"
-           v-model="$data.form.start_date"
-           name="start-date"
-           ref="start-date"
-           :state="$data.states.startDateState"
-           @input="$data.states.startDateState = validatedStartDate()"
-         ></b-form-datepicker>
-         <b-form-invalid-feedback :state="$data.states.startDateState">
-           Please enter a valid date.
-         </b-form-invalid-feedback>
-       </b-form-group>
-     </b-col>
-     <b-col>
-       <b-form-group
-         id="end-date-field"
-         label="End Date *"
-         label-for="end-date"
-         label-class="col-form-label"
-         :state="$data.states.endDateState"
-       >
-         <b-form-datepicker
-           id="end-date"
-           v-model="$data.form.end_date"
-           name="end-date"
-           ref="end-date"
-           :min="$data.form.start_date"
-           :state="$data.states.endDateState"
-           @input="$data.states.endDateState = validatedEndDate()"
-         ></b-form-datepicker>
-         <b-form-invalid-feedback :state="$data.states.endDateState">
-           Please enter a valid date.
-         </b-form-invalid-feedback>
-       </b-form-group>
-     </b-col>
-   </b-row>
-   <b-row>
      <b-col cols="6">
        <b-form-group
          id="semester-field"
@@ -132,7 +96,7 @@
            @change="$data.states.semesterState = validateSemester()"
            @input="(input) => {
 								this.$data.semester = input;
-								this.$data.form.semester_name = input.text;
+								this.$data.form.semester_name = input != null ? input.text :'' ;
 								this.validateSemester();
 							}"
            placeholder="Select Enrollment Semester..."
@@ -155,6 +119,7 @@
        </div>
      </b-col>
    </b-row>
+   </div>
  </b-container>
 </template>
 
@@ -182,8 +147,6 @@ name: 'NewEnrollment',
     form: {
       course : '',
       student : '',
-      start_date : '',
-      end_date : '',
       semester_name : '',
       status : '',
     },
@@ -203,15 +166,9 @@ name: 'NewEnrollment',
       }
       return validation;
     },
-    validatedStartDate(){
-        return this.$data.form.start_date != null;
-    },
-    validatedEndDate(){
-      return this.$data.form.end_date != null;
-    },
     validateSemester(){
       let validation = true;
-      if(this.$data.form.semester_name === null){
+      if(this.$data.form.semester_name === null && this.$data.form.semester_name !== ''){
         validation = false;
       }
       return validation;
@@ -221,8 +178,6 @@ name: 'NewEnrollment',
       this.$data.semester = null;
       this.$data.form.course = '';
       this.$data.form.student = '';
-      this.$data.form.start_date = '';
-      this.$data.form.end_date = '';
       this.$data.form.semester_name = '';
       this.$data.form.status = '';
       this.$data.states.courseState  = null;
@@ -231,7 +186,7 @@ name: 'NewEnrollment',
       this.$data.states.semesterState  = null;
     },
     submit(){
-      if(this.validateCourse() && this.validatedStartDate() && this.validatedEndDate() && this.validateSemester()){
+      if(this.validateCourse() && this.validateSemester()){
         this.$data.form.status = "Planned"
         this.$data.form.student = this.$route.params.studentID
         this.$data.form.course = this.$data.course.pk
@@ -271,7 +226,41 @@ name: 'NewEnrollment',
   }
 }
 </script>
-
 <style scoped>
 
+.btn-primary{
+  background-color: #000000;
+  color: white;
+}
+
+@media only screen
+and (device-width : 375px)
+and (device-height : 812px)
+and (-webkit-device-pixel-ratio : 3) {
+
+  .h6 {
+    font-size: 2vw;
+  }
+
+  .h3 {
+    font-size: 5vw;
+    font-weight: bold;
+  }
+
+  .h4{
+    font-size: 4vw;
+  }
+
+  a{
+    font-size: 3vw;
+  }
+
+  .p{
+    font-size: 3vw;
+  }
+
+  h6 {
+    font-size: 2vw !important;
+  }
+}
 </style>

@@ -1,6 +1,14 @@
 <template>
  <b-container>
-   <div v-if="courses.length === 0">
+   <div v-if=" accessError != ''">
+     <b-row>
+       <b-col>
+         <b-card class=" text-center bg-light">
+           <p>{{accessError}}</p></b-card>
+       </b-col>
+     </b-row>
+   </div>
+   <div v-else-if="courses.length === 0">
    <b-row>
      <b-col>
        <b-card class=" text-center bg-light">
@@ -137,6 +145,7 @@ name: 'NewEnrollment',
     course : null,
     courses : '',
     showMsg : '',
+    accessError: '',
     semesters: [
       { value: 1, text: "Summer 2021" },
       { value: 2, text: "Fall 2021" },
@@ -203,6 +212,10 @@ name: 'NewEnrollment',
             this.showMsg = "error";
           }else if (error.response.status === 400) {
             this.showMsg = "error";
+          } else if (error.response.status === 403) {
+            this.accessError = "You are not authorized to perform this action.";
+          }else {
+            this.showMsg = "error";
           }
         });
       }
@@ -221,6 +234,9 @@ name: 'NewEnrollment',
         this.showMsg = "error";
       }else if (error.response.status === 400) {
         this.showMsg = "error";
+      }
+      else if (error.response.status === 403) {
+        this.accessError = "You are not authorized to perform this action.";
       }
     });
   }

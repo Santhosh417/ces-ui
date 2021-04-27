@@ -4,17 +4,17 @@
       <b-col>
         <b-row>
           <b-col>
-            <p class="h3 text-center">Student Profile</p>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col>
             <b-card v-if="showMsg != ''" style="{color : red}" class=" text-center bg-light">
               <p>{{ showMsg }}</p></b-card>
           </b-col>
         </b-row>
         <b-row v-if="showMsg == ''" class="mt-4 bg-light rounded p-5">
           <b-col>
+            <b-row>
+              <b-col>
+                <p class="h3 text-center">Student Profile</p>
+              </b-col>
+            </b-row>
             <b-row>
               <b-col>
                 <strong>Student Name:</strong>
@@ -41,6 +41,7 @@
         </b-row>
       </b-col>
     </b-row>
+    <div v-if="showMsg == ''">
 <div v-if="$data.studentInfo.enrollments != null">
     <b-row class="mt-3" v-if="$data.studentInfo.enrollments.length > 0">
       <b-col>
@@ -100,6 +101,7 @@
     </div>
     <b-button :to="{name:'addCourseEnrollment', params:{studentID : $data.studentInfo.pk}}" class="btn-primary mb-5">Add a course to study plan</b-button>
 </div>
+    </div>
   </b-container>
 
 </template>
@@ -144,7 +146,16 @@ export default {
             this.getStudentInfo();
           }
         }
-      )}
+      ).catch(e => {
+            console.log(e)
+            if(e.message.includes("403")) {
+              this.showMsg = "You are not authorized to perform this action.";
+            }else {
+              this.showMsg = e.message;
+            }
+          }
+        )
+      }
     },
    updateEnrollment(enrollment_pk) {
       this.$router.push('/student/' +this.$route.params.studentID+'/enrollment/'+enrollment_pk);

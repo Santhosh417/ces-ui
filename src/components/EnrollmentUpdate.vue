@@ -4,17 +4,17 @@
       <b-col>
         <b-row>
           <b-col>
-            <p class="h3 text-center">Student Profile</p>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col>
             <b-card v-if="showMsg != ''" style="{color : red}" class=" text-center bg-light">
               <p>{{ showMsg }}</p></b-card>
           </b-col>
         </b-row>
         <b-row v-if="showMsg == ''" class="mt-4 bg-light rounded p-5">
           <b-col>
+            <b-row>
+              <b-col>
+                <p class="h3 text-center">Student Profile</p>
+              </b-col>
+            </b-row>
             <b-row>
               <b-col>
                 <strong>Student Name:</strong>
@@ -42,7 +42,7 @@
       </b-col>
     </b-row>
 
-<form class="justify-content-center mt-5" @submit.prevent="OnSubmit">
+<form class="justify-content-center mt-5" v-if="showMsg == ''" >
     <!-- <div>
         <label for="">Course:</label>
         <input :disabled="disable" type="text" v-model= "form.course.course_name" /> {{form.course}}
@@ -183,7 +183,9 @@ methods: {
           console.log(e)
           if(e.message.includes("404")){
             this.showMsg = "No Records found for emrollment ID " + this.$route.params.enrollmentID;
-          } else {
+          }else if(e.message.includes("403")) {
+            this.showMsg = "You are not authorized to perform this action.";
+          }else {
             this.showMsg = e.message;
           }
         }
@@ -196,7 +198,9 @@ methods: {
           console.log(e)
           if(e.message.includes("404")){
             this.showMsg = "No Records found for Student ID " + this.$route.params.studentID;
-          } else {
+          } else if(e.message.includes("403")) {
+            this.showMsg = "You are not authorized to perform this action.";
+          }else {
             this.showMsg = e.message;
           }
         }
@@ -217,6 +221,8 @@ methods: {
               this.showMsg = "error";
             } else if (error.response.status === 400) {
               this.showMsg = "error";
+            } else if (error.response.status === 403) {
+              this.showMsg = "You are not authorized to perform this action.";
             }
           });
         }
